@@ -17,4 +17,9 @@ public final class ApiPath {
     // Module Transaction
     public static final String TRANSACTION = "/transaction";
     public static final String PAID = "/paid";
+
+    // Module Promo
+    public static final String PROMO = "/promo";
+    public static final String ADD = "/add";
+    public static final String LIST = "/list";
 }

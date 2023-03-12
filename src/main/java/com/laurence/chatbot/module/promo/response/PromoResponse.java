@@ -1,4 +1,4 @@
-package com.laurence.chatbot.module.transaction.response;
+package com.laurence.chatbot.module.promo.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.util.List;
 
 @Data
 @Builder
@@ -16,15 +17,16 @@ import java.time.Instant;
 @AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TransactionResponse {
-    private String customerEmail;
-    private Integer amount;
+public class PromoResponse {
+    private String code;
+    private Instant startDateTime;
+    private Instant expiredDateTime;
+    private String createdBy;
     private Instant createdDate;
-    private Instant paymentDate;
-    private String invoiceNumber;
-    private String username;
-    private String status;
-    private String promoCode;
+    private String sponsoredBy;
     private Integer discount;
-    private Integer totalAmount;
+    private List<String> user;
+    private String paymentMethod;
+    private Integer minimumPayment;
+    private Integer maxAmountDiscount;
 }

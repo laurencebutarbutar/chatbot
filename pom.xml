@@ -180,6 +180,13 @@
             <artifactId>spring-kafka</artifactId>
         </dependency>
         <!-- End of Kafka Dependencies -->
+
+        <!-- Elasticsearch Dependencies -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+        </dependency>
+        <!-- End of Elasticsearch Dependencies -->
     </dependencies>
 
     <build>

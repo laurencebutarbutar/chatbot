@@ -20,6 +20,7 @@ public class SwaggerConfig {
 
     public static final String DEFAULT_INCLUDE_PATTERN_CHAT = "/chatbot/v1/chat/.*";
     public static final String DEFAULT_INCLUDE_PATTERN_TRANSACTION = "/chatbot/v1/transaction/.*";
+    public static final String DEFAULT_INCLUDE_PATTERN_PROMO = "/chatbot/v1/promo/list";
 
     @Bean
     public Docket productApi() {
@@ -36,7 +37,8 @@ public class SwaggerConfig {
     private SecurityContext securityContext() {
         return SecurityContext.builder()
                 .securityReferences(defaultAuth())
-                .operationSelector(o -> o.requestMappingPattern().matches(DEFAULT_INCLUDE_PATTERN_CHAT) || o.requestMappingPattern().matches(DEFAULT_INCLUDE_PATTERN_TRANSACTION))
+                .operationSelector(o -> o.requestMappingPattern().matches(DEFAULT_INCLUDE_PATTERN_CHAT) || o.requestMappingPattern().matches(DEFAULT_INCLUDE_PATTERN_TRANSACTION) ||
+                        o.requestMappingPattern().matches(DEFAULT_INCLUDE_PATTERN_PROMO))
                 .build();
     }
 
