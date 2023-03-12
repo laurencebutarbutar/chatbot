@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  mongodb:
+    build: ./container/mongodb
+    image: docker-mongodb:latest
+    container_name: mongodb
+    restart: always
+    ports:
+      - 27017:27017
+
+volumes:
+  db:
