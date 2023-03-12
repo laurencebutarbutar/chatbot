@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Configuration;
 public class ModuleProperties {
 
     private Jwt jwt;
+    private Chat chat;
+    private Transaction transaction;
 
     @Data
     public static class Jwt {
@@ -17,4 +19,15 @@ public class ModuleProperties {
         private String secretKey;
     }
 
+    @Data
+    public static class Chat {
+        private String amountPattern;
+        private String emailPattern;
+    }
+
+    @Data
+    public static class Transaction {
+        private String invoicePrefix;
+        private String datePattern;
+    }
 }

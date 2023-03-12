@@ -18,7 +18,8 @@ import java.util.List;
 @EnableSwagger2
 public class SwaggerConfig {
 
-    public static final String DEFAULT_INCLUDE_PATTERN = "/chatbot/v1/chat/.*";
+    public static final String DEFAULT_INCLUDE_PATTERN_CHAT = "/chatbot/v1/chat/.*";
+    public static final String DEFAULT_INCLUDE_PATTERN_TRANSACTION = "/chatbot/v1/transaction/.*";
 
     @Bean
     public Docket productApi() {
@@ -35,8 +36,7 @@ public class SwaggerConfig {
     private SecurityContext securityContext() {
         return SecurityContext.builder()
                 .securityReferences(defaultAuth())
-                .operationSelector(o -> o.requestMappingPattern().matches(DEFAULT_INCLUDE_PATTERN))
-
+                .operationSelector(o -> o.requestMappingPattern().matches(DEFAULT_INCLUDE_PATTERN_CHAT) || o.requestMappingPattern().matches(DEFAULT_INCLUDE_PATTERN_TRANSACTION))
                 .build();
     }
 

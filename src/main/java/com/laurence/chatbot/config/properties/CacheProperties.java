@@ -13,6 +13,7 @@ import java.util.Set;
 public class CacheProperties {
 
     private Common common;
+    private Duration expiryTime;
 
     @Data
     public static class Common {
@@ -20,9 +21,4 @@ public class CacheProperties {
         private Set<String> prohibitedPatterns;
     }
 
-    @Data
-    public static class BaseProperties {
-
-        private Duration expiryTime;
-    }
 }

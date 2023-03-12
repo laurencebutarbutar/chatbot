@@ -26,8 +26,9 @@ public class ChatController {
 
     @LogExecutionTime
     @PostMapping(value = ApiPath.MESSAGE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ChatMessageResponse chat(@RequestBody @Valid ChatMessageRequest chatMessageRequest, @RequestAttribute @ApiIgnore AuthUser authUser) {
+    public ChatMessageResponse chat(@RequestAttribute @ApiIgnore AuthUser authUser,
+                                    @RequestBody @Valid ChatMessageRequest chatMessageRequest) {
         log.info("#chat() with username : {} and message : {}", authUser, chatMessageRequest);
-        return chatService.checkState(chatMessageRequest);
+        return chatService.messageService(authUser, chatMessageRequest);
     }
 }
