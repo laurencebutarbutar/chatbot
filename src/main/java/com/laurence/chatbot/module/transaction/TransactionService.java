@@ -10,6 +10,7 @@ import com.laurence.chatbot.exception.BusinessException;
 import com.laurence.chatbot.module.transaction.request.TransactionRequest;
 import com.laurence.chatbot.module.transaction.response.TransactionResponse;
 import com.laurence.chatbot.repository.mongo.TransactionRepository;
+import com.laurence.chatbot.service.queue.publisher.TransactionNotificationPublisher;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ public class TransactionService {
 
     private final TransactionRepository transactionRepository;
     private final ModuleProperties moduleProperties;
+    private final TransactionNotificationPublisher transactionNotificationPublisher;
 
     public TransactionResponse generateTransaction(TransactionRequest transactionRequest){
         String dateFormat = Optional.ofNullable(moduleProperties.getTransaction())
@@ -49,7 +51,9 @@ public class TransactionService {
         }
         transaction.setStatus(TransactionStatus.SUCCESS.name());
         transactionRepository.save(transaction);
-        return MapperHelper.map(transaction, TransactionResponse.class);
+        TransactionResponse transactionResponse = MapperHelper.map(transaction, TransactionResponse.class);
+        transactionNotificationPublisher.publish(transactionResponse);
+        return transactionResponse;
     }
 
 }

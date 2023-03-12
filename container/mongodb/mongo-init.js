@@ -29,3 +29,6 @@ db.getCollection('template').insertOne({state: 'FINALIZE', message: 'Pembuatan t
 db.getCollection('template').insertOne({state: 'CHECK_STATUS', message: 'Berikut 5 order status sukses terakhir pada hari ini : %s'});
 
 db.createCollection('transaction');
+
+db.createCollection('email');
+db.getCollection('email').insertOne({status: 'SUCCESS', template: '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Transaction</title></head><body><div><div><div style="display:flex"><h2 style="margin:0;color:#2c333c">Transaction</h2></div><div style="background-color:#e6e6e6;height:1px;width:100%;margin:16px 0"></div><p style="margin:0 0 16px 0;color:#4d4d4d">Dear customer, your transaction is<span style="color:#0aa59f;font-weight:400"> success.</span></p><div style="margin-bottom:16px;color:#2c333c"><div style="color:#2c333c">Thanks for using this apps</div></div></div></div></body></html>'});

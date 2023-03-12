@@ -17,9 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
 import java.util.Map;
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -159,12 +157,4 @@ public class ChatService {
         }
     }
 
-
-    private void setCache(String cacheKey, Object value) {
-        if (ObjectUtils.isNotEmpty(value)) {
-            Duration duration = Optional.ofNullable(cacheProperties.getExpiryTime())
-                    .orElse(Duration.ofDays(7));
-            cacheService.set(cacheKey, value, duration);
-        }
-    }
 }

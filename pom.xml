@@ -173,6 +173,13 @@
             <version>${modelmapper.version}</version>
         </dependency>
         <!-- End of Mapper Object Dependencies -->
+
+        <!-- Kafka Dependencies -->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+        <!-- End of Kafka Dependencies -->
     </dependencies>
 
     <build>
