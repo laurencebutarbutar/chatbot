@@ -13,6 +13,8 @@ public interface PromoCodeRepository extends ElasticsearchRepository<PromoCode, 
 
   PromoCode findFirstByCode(String code);
 
+  List<PromoCode> findAllByCodeAndStartDateTimeBeforeAndExpiredDateTimeAfterAndUserIn(String code, Instant nowDate1, Instant nowDate2, List<String> users);
+
   List<PromoCode> findAllByCodeStartsWithAndStartDateTimeBeforeAndExpiredDateTimeAfterAndUserIn(String code, Instant nowDate1, Instant nowDate2, List<String> users);
 
   List<PromoCode> findAllByStartDateTimeBeforeAndExpiredDateTimeAfterAndUserIn(Instant nowDate1, Instant nowDate2, List<String> users);

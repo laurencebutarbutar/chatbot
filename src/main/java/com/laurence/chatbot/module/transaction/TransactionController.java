@@ -2,6 +2,7 @@ package com.laurence.chatbot.module.transaction;
 
 import com.laurence.chatbot.common.logging.LogExecutionTime;
 import com.laurence.chatbot.common.utils.AuthUser;
+import com.laurence.chatbot.enums.PaymentMethod;
 import com.laurence.chatbot.module.base.constant.ApiPath;
 import com.laurence.chatbot.module.transaction.response.TransactionResponse;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +25,10 @@ public class TransactionController {
     @LogExecutionTime
     @PostMapping(value = ApiPath.PAID)
     public TransactionResponse paidTransaction(@RequestAttribute @ApiIgnore AuthUser authUser,
-                                               @RequestParam String invoiceNumber) {
-        log.info("#paidTransaction() with username : {} and invoiceNumber : {}", authUser, invoiceNumber);
-        return transactionService.updateTransaction(authUser, invoiceNumber);
+                                               @RequestParam String invoiceNumber,
+                                               @RequestParam(required = false) String promoCode,
+                                               @RequestParam PaymentMethod paymentMethod) {
+        log.info("#paidTransaction() with username : {}, invoiceNumber : {}, promoCode {}, and paymentMethod {}", authUser, invoiceNumber, promoCode, paymentMethod);
+        return transactionService.updateTransaction(authUser, invoiceNumber, promoCode, paymentMethod);
     }
 }

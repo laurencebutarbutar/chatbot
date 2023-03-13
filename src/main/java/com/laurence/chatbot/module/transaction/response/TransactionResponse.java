@@ -3,6 +3,7 @@ package com.laurence.chatbot.module.transaction.response;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.laurence.chatbot.enums.PaymentMethod;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,4 +28,5 @@ public class TransactionResponse {
     private String promoCode;
     private Integer discount;
     private Integer totalAmount;
+    private PaymentMethod paymentMethod;
 }

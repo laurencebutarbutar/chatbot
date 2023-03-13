@@ -1,5 +1,6 @@
 package com.laurence.chatbot.entity.mongo;
 
+import com.laurence.chatbot.enums.PaymentMethod;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,5 +27,6 @@ public class Transaction {
     private String promoCode;
     private Integer discount;
     private Integer totalAmount;
+    private PaymentMethod paymentMethod;
 
 }

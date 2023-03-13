@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,7 +39,7 @@ public class ChatService {
                 .build();
     }
 
-    private String buildReplyMessage(StateMessage stateMessage, String customerName, String invoiceNumber){
+    private String buildReplyMessage(StateMessage stateMessage, String customerName, String invoiceNumber, List<String> transactionResponses){
         Template templateMessage = templateRepository.findFirstByState(stateMessage);
         String messsage = "";
         switch (stateMessage){
@@ -47,6 +48,9 @@ public class ChatService {
                 break;
             case FINALIZE :
                 messsage = String.format(templateMessage.getMessage(), invoiceNumber);
+                break;
+            case CHECK_STATUS:
+                messsage = String.format(templateMessage.getMessage(), transactionResponses);
                 break;
             default:
                 messsage = templateMessage.getMessage();
@@ -108,7 +112,7 @@ public class ChatService {
         if(ObjectUtils.isNotEmpty(stateSession)){
             if(isValidAnswer(stateSession, chatMessageRequest)){
                 StateSession nextStateSession = buildNextStateSession(stateSession, chatMessageRequest, cacheKey);
-                message = buildReplyMessage(nextStateSession.getState(), null, null);
+                message = buildReplyMessage(nextStateSession.getState(), null, null, null);
                 if(nextStateSession.getState().equals(StateMessage.FINALIZE) || nextStateSession.getState().equals(StateMessage.CHECK_STATUS)){
                     if(nextStateSession.getState().equals(StateMessage.FINALIZE)){
                         TransactionRequest transactionRequest = TransactionRequest.builder()
@@ -117,15 +121,19 @@ public class ChatService {
                                 .username(authUser.getUser().getUsername())
                                 .build();
                         TransactionResponse transactionResponse = transactionService.generateTransaction(transactionRequest);
-                        message = buildReplyMessage(nextStateSession.getState(), null, transactionResponse.getInvoiceNumber());
+                        message = buildReplyMessage(nextStateSession.getState(), null, transactionResponse.getInvoiceNumber(), null);
                     }else{
-
+                        List<TransactionResponse> transactionResponse = transactionService.listTransaction(authUser);
+                        List<String> listMessageResponse = transactionResponse.stream()
+                                .map(transactionResponseMessage -> transactionResponseMessage.getInvoiceNumber() + " - " + transactionResponseMessage.getTotalAmount() + " - " + transactionResponseMessage.getStatus())
+                                .toList();
+                        message = buildReplyMessage(nextStateSession.getState(), null, null, listMessageResponse);
                     }
                     buildNextStateSession(nextStateSession, chatMessageRequest, cacheKey);
                 }
             }else{
-                String messageLastState = buildReplyMessage(stateSession.getState(), authUser.getUser().getUsername(), null);
-                String messageBadRequest = buildReplyMessage(StateMessage.BAD_REQUEST, null, null);
+                String messageLastState = buildReplyMessage(stateSession.getState(), authUser.getUser().getUsername(), null, null);
+                String messageBadRequest = buildReplyMessage(StateMessage.BAD_REQUEST, null, null, null);
                 message = messageBadRequest + " \n " + messageLastState;
             }
         }
@@ -134,7 +142,7 @@ public class ChatService {
                     .state(StateMessage.CHOOSE_MENU)
                     .build();
             cacheService.set(cacheKey, nextStateSession);
-            message = buildReplyMessage(nextStateSession.getState(), authUser.getUser().getUsername(), null);
+            message = buildReplyMessage(nextStateSession.getState(), authUser.getUser().getUsername(), null, null);
         }
 
         return message;

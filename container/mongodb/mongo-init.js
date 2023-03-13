@@ -26,7 +26,7 @@ db.getCollection('template').insertOne({state: 'CHOOSE_MENU', message: 'Hi %s,\n
 db.getCollection('template').insertOne({state: 'INPUT_CUSTOMER_EMAIL', message: 'Silahkan masukkan email customer yang ingin anda tagihkan.'});
 db.getCollection('template').insertOne({state: 'INPUT_AMOUNT', message: 'Silakan masukkan nominal yang ingin Anda tagihkan.'});
 db.getCollection('template').insertOne({state: 'FINALIZE', message: 'Pembuatan transaksi dengan nomor %s telah berhasil.'});
-db.getCollection('template').insertOne({state: 'CHECK_STATUS', message: 'Berikut 5 order status sukses terakhir pada hari ini : %s'});
+db.getCollection('template').insertOne({state: 'CHECK_STATUS', message: 'Berikut transaksi anda : %s'});
 
 db.createCollection('transaction');
 

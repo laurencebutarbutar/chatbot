@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface TransactionRepository extends MongoRepository<Transaction, String> {
     Transaction findFirstByInvoiceNumberAndStatusAndUsername(String invoiceNumber, String status, String username);
-    List<Transaction> findAllByUsername(String username);
+    List<Transaction> findAllByUsernameOrderByCreatedDateDesc(String username);
 }
